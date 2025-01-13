@@ -36,7 +36,7 @@ const EditStory = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/story/idstory/${id}`,
+          `https://book-app-backend-6b6f.onrender.com/api/story/idstory/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -81,7 +81,7 @@ const EditStory = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/story/updatestory/${id}`,
+        `https://book-app-backend-6b6f.onrender.com/api/story/updatestory/${id}`,
         formData,
         {
           headers: {
@@ -112,11 +112,14 @@ const EditStory = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/story/deletestory/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://book-app-backend-6b6f.onrender.com/api/story/deletestory/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setSuccessMessage("Story deleted successfully!"); // Set success message
       setTimeout(() => {
         setSuccessMessage(""); // Clear success message after 3 seconds

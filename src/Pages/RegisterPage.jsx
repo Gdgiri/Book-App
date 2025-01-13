@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://book-app-backend-6b6f.onrender.com/api/auth/register",
         {
           username,
           email,

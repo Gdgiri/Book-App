@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://book-app-backend-6b6f.onrender.com/api/auth/login",
         {
           email,
           password,

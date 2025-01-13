@@ -21,7 +21,7 @@ export const uploadStory = createAsyncThunk(
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/story/createstory",
+        "https://book-app-backend-6b6f.onrender.com/api/story/createstory",
         storyData,
         config
       );
@@ -52,7 +52,7 @@ export const getAllStories = createAsyncThunk(
       };
 
       const response = await axios.get(
-        "http://localhost:5000/api/story/getall",
+        "https://book-app-backend-6b6f.onrender.com/api/story/getall",
         config
       );
       return response.data.stories; // Return the list of stories
@@ -81,7 +81,7 @@ export const getStoryById = createAsyncThunk(
       };
 
       const response = await axios.get(
-        `http://localhost:5000/api/story/idstory/${storyId}`,
+        `https://book-app-backend-6b6f.onrender.com/api/story/idstory/${storyId}`,
         config
       );
       return response.data.story; // Return the single story
@@ -109,7 +109,7 @@ export const getUserStories = createAsyncThunk(
       };
 
       const response = await axios.get(
-        "http://localhost:5000/api/story/getStory",
+        "https://book-app-backend-6b6f.onrender.com/api/story/getStory",
         config
       );
       return response.data.stories; // Return the list of user's stories
@@ -126,7 +126,7 @@ export const deleteStory = createAsyncThunk(
   async (storyId, { rejectWithValue }) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/story/deletestory/${storyId}`
+        `https://book-app-backend-6b6f.onrender.com/api/story/deletestory/${storyId}`
       ); // Replace with your backend delete endpoint
       return storyId; // Return the storyId so it can be used in the reducer
     } catch (error) {
@@ -140,7 +140,7 @@ export const updateStory = createAsyncThunk(
   async ({ storyId, storyData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/story/updatestory/${storyId}`,
+        `https://book-app-backend-6b6f.onrender.com/api/story/updatestory/${storyId}`,
         storyData
       ); // Adjust the API endpoint
       return response.data; // Assuming the response contains the updated story

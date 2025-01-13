@@ -1,3 +1,4 @@
+// src/components/LoginPage.js
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -7,12 +8,12 @@ import {
   loginFailure,
 } from "../Redux/Slices/authSlice";
 import { FaSpinner } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,10 +30,16 @@ const LoginPage = () => {
           password,
         }
       );
-      dispatch(loginSuccess(data));
 
-      // Navigate to /dashboard after successful login
-      navigate("/dashboard");
+      // Ensure that the response contains the token
+      if (data.token) {
+        // Dispatch login success
+        dispatch(loginSuccess(data));
+        // Redirect to /upload after successful login
+        navigate("/getall");
+      } else {
+        dispatch(loginFailure("No token received"));
+      }
     } catch (err) {
       dispatch(
         loginFailure(err.response?.data?.message || "Something went wrong")
@@ -100,7 +107,7 @@ const LoginPage = () => {
               )}
             </button>
           </div>
-          <span>Forget Password?</span>
+          <span>Forgot Password?</span>
           <Link
             to="/forgot"
             className="text-blue-500 hover:underline text-center"

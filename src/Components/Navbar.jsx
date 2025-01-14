@@ -39,6 +39,11 @@ const Navbar = () => {
             Stories
           </Link>
         </li>
+        <li>
+          <Link to="/upload" className="text-white hover:text-gray-200">
+            Upload
+          </Link>
+        </li>
       </ul>
       <ul className="flex space-x-4">
         {isLoggedIn ? (

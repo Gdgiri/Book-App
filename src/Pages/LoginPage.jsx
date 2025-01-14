@@ -1,4 +1,3 @@
-// src/components/LoginPage.js
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -7,7 +6,7 @@ import {
   loginSuccess,
   loginFailure,
 } from "../Redux/Slices/authSlice";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -17,6 +16,7 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,11 +31,8 @@ const LoginPage = () => {
         }
       );
 
-      // Ensure that the response contains the token
       if (data.token) {
-        // Dispatch login success
         dispatch(loginSuccess(data));
-        // Redirect to /upload after successful login
         navigate("/getall");
       } else {
         dispatch(loginFailure("No token received"));
@@ -71,7 +68,7 @@ const LoginPage = () => {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-600"
@@ -79,7 +76,7 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // Toggle between text and password
               id="password"
               name="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
@@ -87,6 +84,13 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+              className="absolute inset-y-0 right-3 flex items-center text-gray-600 focus:outline-none"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}

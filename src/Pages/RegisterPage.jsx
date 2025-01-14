@@ -6,17 +6,18 @@ import {
   registerSuccess,
   registerFailure,
 } from "../Redux/Slices/authSlice";
-import { FaSpinner } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -31,8 +32,7 @@ const RegisterPage = () => {
           password,
         }
       );
-      dispatch(registerSuccess(data)); // Automatically log the user in after registration
-      // Redirect to login page after successful registration
+      dispatch(registerSuccess(data));
       navigate("/login");
     } catch (err) {
       dispatch(registerFailure(err.response.data.message));
@@ -88,15 +88,24 @@ const RegisterPage = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"} // Toggle between text and password
+                id="password"
+                name="password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}

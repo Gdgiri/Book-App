@@ -47,7 +47,7 @@ const UserStories = () => {
   }
 
   return (
-    <div className="container mx-auto justify-between m-5 p-3.5">
+    <div className="container mx-auto  m-5 p-3.5">
       <h2 className="text-2xl font-bold my-4 text-center">
         Your Uploaded Stories
       </h2>

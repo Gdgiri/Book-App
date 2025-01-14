@@ -87,7 +87,7 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)} // Toggle visibility
-              className="absolute inset-y-0 right-3 flex items-center text-gray-600 focus:outline-none"
+              className="absolute inset-y-0 right-3 mt-5 flex items-center text-gray-600 focus:outline-none"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>

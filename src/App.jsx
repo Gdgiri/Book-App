@@ -11,6 +11,7 @@ import UserStories from "./Pages/UserStories";
 import EditStory from "./Pages/EditStory";
 import Navbar from "./Components/Navbar";
 import StoryDetail from "./Pages/StoryDetail";
+import RatingService from "./Pages/RatingService";
 
 const App = () => {
   return (
@@ -33,6 +34,10 @@ const App = () => {
         <Route path="/get" element={<UserStories />} />
         <Route path="/update/:id" element={<EditStory />} />
         <Route path="/story" element={<StoryDetail />} />
+
+        {/* Rating and review */}
+
+        <Route path="/rating" element={<RatingService />} />
       </Routes>
     </Router>
   );

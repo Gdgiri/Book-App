@@ -1,28 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import { getAllStories } from "../Redux/Slices/storeSlice"; // Import the getAllStories action
-import { FaSpinner } from "react-icons/fa"; // Import spinner for loading
+import { useNavigate } from "react-router-dom";
+import { getAllStories } from "../Redux/Slices/storeSlice";
+import { FaSpinner } from "react-icons/fa";
+import axios from "axios"; // Import axios for fetching reviews
 
 const StoryList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { stories, isLoading, error } = useSelector((state) => state.story);
 
+  const [reviews, setReviews] = useState({}); // State to store reviews for each story
+
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Get token from localStorage
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/login"); // Redirect to login if no token is found
+      navigate("/login");
       return;
     }
 
-    dispatch(getAllStories()); // Fetch stories if token exists
-  }, [dispatch, navigate]);
+    dispatch(getAllStories()); // Fetch all stories
+
+    // Fetch reviews for each story
+    const fetchReviews = async () => {
+      const reviewsData = {};
+      for (const story of stories) {
+        try {
+          const response = await axios.get(`/api/reviews/${story._id}`);
+          reviewsData[story._id] = response.data; // Store reviews by story ID
+        } catch (err) {
+          console.error("Error fetching reviews:", err);
+        }
+      }
+      setReviews(reviewsData); // Update state with all reviews
+    };
+
+    if (stories.length > 0) {
+      fetchReviews();
+    }
+  }, [dispatch, navigate, stories]);
 
   const handleRead = (story) => {
-    // Navigate to the story detail page with the story object
     navigate("/story", { state: { story } });
   };
 
@@ -47,7 +66,7 @@ const StoryList = () => {
                 <img
                   src={story.coverImage}
                   alt="Cover"
-                  className="w-80 h-100  mt-2 rounded-md mx-auto"
+                  className="w-80 h-100 mt-2 rounded-md mx-auto"
                 />
               </div>
               <h3 className="text-xl font-semibold text-center">
@@ -59,6 +78,27 @@ const StoryList = () => {
               <p className="mt-2 text-sm text-gray-500 text-center">
                 By {story.author.username}
               </p>
+
+              {/* Display Reviews */}
+              <div className="mt-4">
+                <h4 className="text-lg font-semibold">Reviews:</h4>
+                {reviews[story._id] ? (
+                  reviews[story._id].map((review) => (
+                    <div key={review._id} className="border-t mt-2 pt-2">
+                      <p className="text-sm text-gray-700">
+                        <strong>{review.user.username}:</strong>{" "}
+                        {review.comment}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Rating: {review.rating} ⭐
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500">No reviews yet.</p>
+                )}
+              </div>
+
               <div className="text-center">
                 <button
                   onClick={() => handleRead(story)}

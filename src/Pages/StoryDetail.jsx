@@ -34,7 +34,7 @@ const StoryDetail = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/ratings", // Replace with your endpoint
+        "https://book-app-backend-6b6f.onrender.com/api/ratings", // Replace with your endpoint
         { storyId: story._id, rating, comment },
         config
       );

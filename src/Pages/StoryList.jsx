@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllStories } from "../Redux/Slices/storeSlice";
 import { FaSpinner } from "react-icons/fa";
-import axios from "axios"; // Import axios for fetching reviews
+import axios from "axios";
 
 const StoryList = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,9 @@ const StoryList = () => {
   const { stories, isLoading, error } = useSelector((state) => state.story);
 
   const [reviews, setReviews] = useState({}); // State to store reviews for each story
+  const [reviewsLoading, setReviewsLoading] = useState(false); // State for reviews loading
 
+  // Fetch stories when the component mounts
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -20,28 +22,37 @@ const StoryList = () => {
       return;
     }
 
-    dispatch(getAllStories()); // Fetch all stories
+    dispatch(getAllStories());
+  }, [dispatch, navigate]);
 
-    // Fetch reviews for each story
+  // Fetch reviews when stories are loaded
+  useEffect(() => {
     const fetchReviews = async () => {
-      const reviewsData = {};
-      for (const story of stories) {
-        try {
-          const response = await axios.get(
-            `https://book-app-backend-6b6f.onrender.com/api/rating/reviews/${story._id}`
-          );
-          reviewsData[story._id] = response.data; // Store reviews by story ID
-        } catch (err) {
-          console.error("Error fetching reviews:", err);
+      if (stories.length > 0) {
+        setReviewsLoading(true);
+        const reviewsData = {};
+
+        for (const story of stories) {
+          try {
+            const response = await axios.get(
+              `https://book-app-backend-6b6f.onrender.com/api/rating/reviews/${story._id}`
+            );
+            reviewsData[story._id] = response.data; // Store reviews by story ID
+          } catch (err) {
+            console.error(
+              `Error fetching reviews for story ${story._id}:`,
+              err
+            );
+          }
         }
+
+        setReviews(reviewsData); // Update reviews state
+        setReviewsLoading(false);
       }
-      setReviews(reviewsData); // Update state with all reviews
     };
 
-    if (stories.length > 0) {
-      fetchReviews();
-    }
-  }, [dispatch, navigate, stories]);
+    fetchReviews();
+  }, [stories]); // Run only when `stories` changes
 
   const handleRead = (story) => {
     navigate("/story", { state: { story } });
@@ -51,7 +62,7 @@ const StoryList = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <h2 className="text-2xl font-semibold text-center mb-6">All Stories</h2>
 
-      {isLoading ? (
+      {isLoading || reviewsLoading ? (
         <div className="flex justify-center items-center">
           <FaSpinner className="animate-spin text-4xl text-blue-500" />
         </div>
@@ -104,7 +115,7 @@ const StoryList = () => {
               <div className="text-center">
                 <button
                   onClick={() => handleRead(story)}
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md "
+                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
                 >
                   Read
                 </button>

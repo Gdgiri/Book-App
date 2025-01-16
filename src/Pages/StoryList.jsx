@@ -27,7 +27,9 @@ const StoryList = () => {
       const reviewsData = {};
       for (const story of stories) {
         try {
-          const response = await axios.get(`/api/reviews/${story._id}`);
+          const response = await axios.get(
+            `https://book-app-backend-6b6f.onrender.com/api/rating/reviews/${story._id}`
+          );
           reviewsData[story._id] = response.data; // Store reviews by story ID
         } catch (err) {
           console.error("Error fetching reviews:", err);

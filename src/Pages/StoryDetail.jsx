@@ -42,6 +42,7 @@ const StoryDetail = () => {
       setSuccessMessage("Review submitted successfully!");
       setRating(0);
       setComment("");
+      navigate("/getall");
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Something went wrong.");
     }

@@ -12,6 +12,7 @@ const StoryList = () => {
 
   const [reviews, setReviews] = useState({}); // State to store reviews for each story
   const [reviewsLoading, setReviewsLoading] = useState(false); // State for reviews loading
+  const [showAllComments, setShowAllComments] = useState(false); // State for toggling comments display
 
   // Fetch stories when the component mounts
   useEffect(() => {
@@ -54,8 +55,19 @@ const StoryList = () => {
     fetchReviews();
   }, [stories]); // Run only when `stories` changes
 
+  // Function to calculate the average rating
+  const calculateAverageRating = (reviews) => {
+    if (reviews.length === 0) return 0;
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalRating / reviews.length;
+  };
+
   const handleRead = (story) => {
     navigate("/story", { state: { story } });
+  };
+
+  const handleSeeMoreComments = () => {
+    setShowAllComments(!showAllComments);
   };
 
   return (
@@ -92,21 +104,47 @@ const StoryList = () => {
                 By {story.author.username}
               </p>
 
+              {/* Display Average Rating */}
+              <div className="mt-2 text-sm text-gray-500 text-center">
+                {reviews[story._id] ? (
+                  <>
+                    <span className="font-semibold">Average Rating:</span>
+                    <span className="ml-2 text-yellow-500">
+                      {calculateAverageRating(reviews[story._id]).toFixed(1)} ⭐
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-semibold">No ratings yet.</span>
+                )}
+              </div>
+
               {/* Display Reviews */}
               <div className="mt-4">
                 <h4 className="text-lg font-semibold">Reviews:</h4>
                 {reviews[story._id] ? (
-                  reviews[story._id].map((review) => (
-                    <div key={review._id} className="border-t mt-2 pt-2">
-                      <p className="text-sm text-gray-700">
-                        <strong>{review.user.username}:</strong>{" "}
-                        {review.comment}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Rating: {review.rating} ⭐
-                      </p>
-                    </div>
-                  ))
+                  <>
+                    {reviews[story._id]
+                      .slice(0, showAllComments ? reviews[story._id].length : 2)
+                      .map((review) => (
+                        <div key={review._id} className="border-t mt-2 pt-2">
+                          <p className="text-sm text-gray-700">
+                            <strong>{review.user.username}:</strong>{" "}
+                            {review.comment}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            Rating: {review.rating} ⭐
+                          </p>
+                        </div>
+                      ))}
+                    {reviews[story._id].length > 2 && (
+                      <button
+                        onClick={handleSeeMoreComments}
+                        className="mt-2 text-blue-500"
+                      >
+                        {showAllComments ? "Show Less" : "See More"}
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <p className="text-sm text-gray-500">No reviews yet.</p>
                 )}

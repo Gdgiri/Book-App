@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://your-api-url.com/api/ratings";
+const API_BASE_URL = "http://localhost:5000/api/ratings";
 
 const RatingService = {
   // Add a new rating

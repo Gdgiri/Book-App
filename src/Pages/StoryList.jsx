@@ -10,35 +10,30 @@ const StoryList = () => {
   const navigate = useNavigate();
   const { stories, isLoading, error } = useSelector((state) => state.story);
 
-  const [reviews, setReviews] = useState({}); // State to store reviews for each story
-  const [reviewsLoading, setReviewsLoading] = useState(false); // State for reviews loading
-  const [showAllComments, setShowAllComments] = useState(false); // State for toggling comments display
+  const [reviews, setReviews] = useState({});
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [showAllComments, setShowAllComments] = useState(false);
 
-  // Fetch stories when the component mounts
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       navigate("/login");
       return;
     }
-
     dispatch(getAllStories());
   }, [dispatch, navigate]);
 
-  // Fetch reviews when stories are loaded
   useEffect(() => {
     const fetchReviews = async () => {
       if (stories.length > 0) {
         setReviewsLoading(true);
         const reviewsData = {};
-
         for (const story of stories) {
           try {
             const response = await axios.get(
               `https://book-app-backend-6b6f.onrender.com/api/rating/reviews/${story._id}`
             );
-            reviewsData[story._id] = response.data; // Store reviews by story ID
+            reviewsData[story._id] = response.data;
           } catch (err) {
             console.error(
               `Error fetching reviews for story ${story._id}:`,
@@ -46,16 +41,14 @@ const StoryList = () => {
             );
           }
         }
-
-        setReviews(reviewsData); // Update reviews state
+        setReviews(reviewsData);
         setReviewsLoading(false);
       }
     };
 
     fetchReviews();
-  }, [stories]); // Run only when `stories` changes
+  }, [stories]);
 
-  // Function to calculate the average rating
   const calculateAverageRating = (reviews) => {
     if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
@@ -71,41 +64,44 @@ const StoryList = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <h2 className="text-2xl font-semibold text-center mb-6">All Stories</h2>
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-center mb-4">
+        All Stories
+      </h2>
 
       {isLoading || reviewsLoading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center h-48">
           <FaSpinner className="animate-spin text-4xl text-blue-500" />
         </div>
       ) : error ? (
-        <p className="text-red-500 text-center text-3xl m-3">{error}</p>
+        <p className="text-red-500 text-center text-lg md:text-2xl m-3">
+          {error}
+        </p>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {stories.map((story) => (
             <div
               key={story._id}
-              className="bg-white p-4 rounded-lg shadow-lg border"
+              className="bg-white p-4 rounded-lg shadow-lg border flex flex-col"
             >
-              <div className="mt-4">
+              <div className="mb-4">
                 <img
                   src={story.coverImage}
                   alt="Cover"
-                  className="w-80 h-100 mt-2 rounded-md mx-auto"
+                  className="w-full h-48 sm:h-64 md:h-72 object-cover rounded-md"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-center">
+              <h3 className="text-lg sm:text-xl font-semibold text-center mb-2">
                 {story.title}
               </h3>
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-sm sm:text-base text-gray-600 text-center mb-2">
                 {story.description}
               </p>
-              <p className="mt-2 text-sm text-gray-500 text-center">
+              <p className="text-xs sm:text-sm text-gray-500 text-center mb-4">
                 By {story.author.username}
               </p>
 
-              {/* Display Average Rating */}
-              <div className="mt-2 text-sm text-gray-500 text-center">
+              <div className="text-sm text-gray-500 text-center mb-4">
                 {reviews[story._id] ? (
                   <>
                     <span className="font-semibold">Average Rating:</span>
@@ -118,9 +114,8 @@ const StoryList = () => {
                 )}
               </div>
 
-              {/* Display Reviews */}
-              <div className="mt-4">
-                <h4 className="text-lg font-semibold">Reviews:</h4>
+              <div className="mb-4">
+                <h4 className="text-base font-semibold">Reviews:</h4>
                 {reviews[story._id] ? (
                   <>
                     {reviews[story._id]
@@ -131,7 +126,7 @@ const StoryList = () => {
                             <strong>{review.user.username}:</strong>{" "}
                             {review.comment}
                           </p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-xs text-gray-500">
                             Rating: {review.rating} ⭐
                           </p>
                         </div>
@@ -139,7 +134,7 @@ const StoryList = () => {
                     {reviews[story._id].length > 2 && (
                       <button
                         onClick={handleSeeMoreComments}
-                        className="mt-2 text-blue-500"
+                        className="mt-2 text-blue-500 text-sm"
                       >
                         {showAllComments ? "Show Less" : "See More"}
                       </button>
@@ -150,14 +145,12 @@ const StoryList = () => {
                 )}
               </div>
 
-              <div className="text-center">
-                <button
-                  onClick={() => handleRead(story)}
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-                >
-                  Read
-                </button>
-              </div>
+              <button
+                onClick={() => handleRead(story)}
+                className="mt-auto bg-blue-500 text-white px-4 py-2 rounded-md"
+              >
+                Read
+              </button>
             </div>
           ))}
         </div>

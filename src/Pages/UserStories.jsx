@@ -29,6 +29,10 @@ const UserStories = () => {
     // Navigate to the edit page with the story ID
     navigate(`/update/${storyId}`);
   };
+  const handleRead = (storyId) => {
+    // Navigate to the edit page with the story ID
+    navigate(`/story/${storyId}`);
+  };
 
   if (isLoading) {
     return (
@@ -96,6 +100,12 @@ const UserStories = () => {
               </span>
 
               <div className="mt-4 flex justify-center ">
+                <button
+                  onClick={() => handleRead(story._id)}
+                  className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-white"
+                >
+                  Read
+                </button>
                 <button
                   onClick={() => handleEdit(story._id)}
                   className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white"

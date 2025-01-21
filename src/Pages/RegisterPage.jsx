@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -40,20 +40,20 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100">
-      <div className="flex w-11/12 max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-lg shadow-xl overflow-hidden">
         {/* Left Side - Image */}
         <div className="w-full md:w-1/2">
           <img
             src="https://i.pinimg.com/236x/0c/9b/89/0c9b89b62ba04b4b4740f4ce2da28b54.jpg"
             alt="Registration Illustration"
-            className="h-full w-full object-cover rounded-l-lg"
+            className="h-64 md:h-full w-full object-cover"
           />
         </div>
 
         {/* Right Side - Form */}
-        <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-700">
+        <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center text-gray-700">
             Create Account
           </h2>
 
@@ -69,7 +69,7 @@ const RegisterPage = () => {
                 type="text"
                 id="username"
                 name="username"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -87,7 +87,7 @@ const RegisterPage = () => {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -103,10 +103,10 @@ const RegisterPage = () => {
               </label>
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"} // Toggle between text and password
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

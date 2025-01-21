@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,6 +15,9 @@ const Navbar = () => {
   };
 
   const isLoggedIn = !!localStorage.getItem("token");
+
+  const activeClass = "text-yellow-400 font-bold border-b-2 border-yellow-400";
+  const inactiveClass = "hover:text-gray-200";
 
   return (
     <nav className="bg-blue-600 text-white p-4">
@@ -68,19 +71,34 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 mx-auto">
           <li>
-            <Link to="/getall" className="hover:text-gray-200">
+            <NavLink
+              to="/getall"
+              className={({ isActive }) =>
+                isActive ? `${activeClass}` : `${inactiveClass}`
+              }
+            >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/get" className="hover:text-gray-200">
+            <NavLink
+              to="/get"
+              className={({ isActive }) =>
+                isActive ? `${activeClass}` : `${inactiveClass}`
+              }
+            >
               Stories
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/upload" className="hover:text-gray-200">
+            <NavLink
+              to="/upload"
+              className={({ isActive }) =>
+                isActive ? `${activeClass}` : `${inactiveClass}`
+              }
+            >
               Upload
-            </Link>
+            </NavLink>
           </li>
         </ul>
 
@@ -110,22 +128,37 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 space-y-4 ">
+        <div className="md:hidden mt-4 space-y-4">
           <ul className="space-y-2 text-center">
             <li>
-              <Link to="/getall" className="block hover:text-gray-200">
+              <NavLink
+                to="/getall"
+                className={({ isActive }) =>
+                  isActive ? `${activeClass} block` : `${inactiveClass} block`
+                }
+              >
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/get" className="block hover:text-gray-200">
+              <NavLink
+                to="/get"
+                className={({ isActive }) =>
+                  isActive ? `${activeClass} block` : `${inactiveClass} block`
+                }
+              >
                 Stories
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/upload" className="block hover:text-gray-200">
+              <NavLink
+                to="/upload"
+                className={({ isActive }) =>
+                  isActive ? `${activeClass} block` : `${inactiveClass} block`
+                }
+              >
                 Upload
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <ul className="space-y-2">

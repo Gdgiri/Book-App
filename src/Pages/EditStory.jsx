@@ -133,133 +133,146 @@ const EditStory = () => {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto border rounded-md shadow-lg">
-      <h2 className="text-xl font-semibold mb-4">Edit Story</h2>
+    <div className="p-6 max-w-5xl mx-auto border rounded-md shadow-lg flex items-center">
+      <div className="flex-1 pr-6">
+        <img
+          src="https://i.pinimg.com/736x/96/07/59/960759a9a5290e870005e5da870a12b6.jpg"
+          alt="edit"
+          className="w-full h-auto rounded-md"
+        />
+      </div>
+      <div className="flex-1">
+        <h2 className="text-xl font-semibold mb-4">Edit Story</h2>
 
-      {error && <p className="text-red-500 mb-2">{error}</p>}
+        {error && <p className="text-red-500 mb-2">{error}</p>}
 
-      {/* Display the success message */}
-      {successMessage && (
-        <p className="text-green-500 mb-2">{successMessage}</p>
-      )}
+        {/* Display the success message */}
+        {successMessage && (
+          <p className="text-green-500 mb-2">{successMessage}</p>
+        )}
 
-      {isLoading && <p>Loading...</p>}
+        {isLoading && <p>Loading...</p>}
 
-      {story && !isLoading && (
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">Story Preview</h3>
-          <div className="mb-2">
-            <strong>Title:</strong> {story.title}
+        {story && !isLoading && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Story Preview</h3>
+            <div className="mb-2">
+              <strong>Title:</strong> {story.title}
+            </div>
+            <div className="mb-2">
+              <strong>Description:</strong> {story.description}
+            </div>
+            <div className="mb-2">
+              <strong>Content:</strong> {story.content}
+            </div>
+            <div className="mb-2">
+              <strong>Cover Image:</strong>{" "}
+              <img
+                src={story.coverImage}
+                alt="Cover"
+                className="w-full h-auto"
+              />
+            </div>
           </div>
-          <div className="mb-2">
-            <strong>Description:</strong> {story.description}
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="title"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
           </div>
-          <div className="mb-2">
-            <strong>Content:</strong> {story.content}
+
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="description"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            ></textarea>
           </div>
-          <div className="mb-2">
-            <strong>Cover Image:</strong>{" "}
-            <img src={story.coverImage} alt="Cover" className="w-full h-auto" />
+
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="content"
+            >
+              Content
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            ></textarea>
           </div>
-        </div>
-      )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="title"
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="coverImage"
+            >
+              Cover Image (URL or Base64)
+            </label>
+            <input
+              type="text"
+              id="coverImage"
+              name="coverImage"
+              value={formData.coverImage}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded-md"
+            disabled={isLoading}
           >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
-          />
-        </div>
+            {isLoading ? (
+              <AiOutlineLoading className="animate-spin mx-auto text-lg" />
+            ) : (
+              "Update Story"
+            )}
+          </button>
+        </form>
 
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="description"
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
+            disabled={isLoading}
           >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
-          ></textarea>
+            {isLoading ? (
+              <AiOutlineLoading className="animate-spin mx-auto text-lg" />
+            ) : (
+              "Delete Story"
+            )}
+          </button>
         </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="content"
-          >
-            Content
-          </label>
-          <textarea
-            id="content"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="coverImage"
-          >
-            Cover Image (URL or Base64)
-          </label>
-          <input
-            type="text"
-            id="coverImage"
-            name="coverImage"
-            value={formData.coverImage}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <AiOutlineLoading className="animate-spin mx-auto text-lg" />
-          ) : (
-            "Update Story"
-          )}
-        </button>
-      </form>
-
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 text-white px-4 py-2 rounded-md"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <AiOutlineLoading className="animate-spin mx-auto text-lg" />
-          ) : (
-            "Delete Story"
-          )}
-        </button>
       </div>
     </div>
   );

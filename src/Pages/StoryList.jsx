@@ -97,6 +97,9 @@ const StoryList = () => {
               <p className="text-sm sm:text-base text-gray-600 text-center mb-2">
                 {story.description}
               </p>
+              <p className="text-sm sm:text-base text-gray-600 text-center mb-2">
+                {story.createdAt}
+              </p>
               <p className="text-xs sm:text-sm text-gray-500 text-center mb-4">
                 By {story.author.username}
               </p>

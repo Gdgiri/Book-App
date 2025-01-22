@@ -62,20 +62,19 @@ const UploadStory = () => {
     <div className="flex justify-center p-10">
       <div className="flex flex-row items-center space-x-8">
         {/* Image Section */}
-        <div className="w-1/2">
-          <img
-            src="https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
-            alt="upload"
-            className="rounded-md shadow-md"
-          />
-        </div>
 
         {/* Form Section */}
         <div className="w-1/2 p-6 max-w-md border rounded-md shadow-lg">
           <h2 className="text-xl font-semibold mb-4">Upload Story</h2>
 
           {error && <p className="text-red-500 mb-2">{error}</p>}
-
+          <div className="w-1/2">
+            <img
+              src="https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
+              alt="upload"
+              className="rounded-md shadow-md"
+            />
+          </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label

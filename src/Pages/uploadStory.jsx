@@ -144,7 +144,7 @@ const UploadStory = () => {
             <AiOutlineLoading className="animate-spin mx-auto text-lg" />
           ) : (
             <span>
-              <AiOutlineUpload size={20} />
+              <AiOutlineUpload className="animate-spin mx-auto text-lg" />
               Upload Story
             </span>
           )}

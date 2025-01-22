@@ -81,9 +81,9 @@ const Navbar = () => {
                 isActive ? `${activeClass}` : `${inactiveClass}`
               }
             >
-              <div className="flex items-center space-x-2 hover:border-b-2 border-yellow-400">
+              <div className="flex items-center space-x-2 ">
                 <IoMdHome size={20} />
-                <span>Home</span>
+                <span className="hover:border-b-2 border-yellow-400">Home</span>
               </div>
             </NavLink>
           </li>
@@ -96,7 +96,9 @@ const Navbar = () => {
             >
               <div className="flex items-center space-x-2">
                 <ImBooks size={20} />
-                <span>Stories</span>
+                <span className="hover:border-b-2 border-yellow-400">
+                  Stories
+                </span>
               </div>
             </NavLink>
           </li>
@@ -109,7 +111,9 @@ const Navbar = () => {
             >
               <div className="flex items-center space-x-2">
                 <AiOutlineUpload size={20} />
-                <span>Upload</span>
+                <span className="hover:border-b-2 border-yellow-400">
+                  Upload
+                </span>
               </div>
             </NavLink>
           </li>

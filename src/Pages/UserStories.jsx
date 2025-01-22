@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { FaSpinner } from "react-icons/fa";
-//import { AiOutlineLoading } from "react-icons/ai"; // Import react-icons for spinner
+import { AiOutlineUpload, AiOutlineEdit } from "react-icons/ai"; // Import upload and edit icons
 import { getUserStories } from "../Redux/Slices/storeSlice"; // Import the delete action
 
 const UserStories = () => {
@@ -14,8 +14,6 @@ const UserStories = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Check for the token
-    //console.log(token);
-
     if (!token) {
       navigate("/login"); // Redirect to login if no token is found
       return;
@@ -51,8 +49,9 @@ const UserStories = () => {
       <h2 className="text-2xl font-bold my-4 text-center">
         Your Uploaded Stories
       </h2>
-      <div className="text-center">
-        <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white justify-center">
+      <div className="text-center mb-4">
+        <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white flex items-center justify-center">
+          <AiOutlineUpload className="mr-2" />
           <Link to="/upload" className="text-white">
             Upload
           </Link>
@@ -62,7 +61,8 @@ const UserStories = () => {
       {stories.length === 0 ? (
         <>
           <p>No stories uploaded yet.</p>
-          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white justify-center">
+          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white justify-center flex items-center">
+            <AiOutlineUpload className="mr-2" />
             <Link to="/upload" className="text-white">
               Upload
             </Link>
@@ -84,22 +84,23 @@ const UserStories = () => {
                 <img
                   src={story.coverImage}
                   alt="Story Cover"
-                  className="w-80 h-100  mt-2 rounded-md mx-auto  "
+                  className="w-80 h-100 mt-2 rounded-md mx-auto"
                 />
               )}
 
               <p className="mt-2 text-justify p-3">
                 <strong>Story Description:</strong> {story.description}
               </p>
-              <span className="text-black-500 text-center block ">
+              <span className="text-black-500 text-center block">
                 {new Date(story.createdAt).toLocaleDateString()}
               </span>
 
-              <div className="mt-4 flex justify-center ">
+              <div className="mt-4 flex justify-center">
                 <button
                   onClick={() => handleEdit(story._id)}
-                  className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white"
+                  className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white flex items-center"
                 >
+                  <AiOutlineEdit className="mr-2" />
                   Edit
                 </button>
               </div>

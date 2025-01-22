@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineLoading } from "react-icons/ai";
+import { AiOutlineLoading, AiOutlineUpload } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { uploadStory } from "../Redux/Slices/storeSlice"; // Correct import path for your storySlice
 
@@ -143,7 +143,10 @@ const UploadStory = () => {
           {isLoading ? (
             <AiOutlineLoading className="animate-spin mx-auto text-lg" />
           ) : (
-            "Upload Story"
+            <span>
+              <AiOutlineUpload size={20} />
+              Upload Story
+            </span>
           )}
         </button>
       </form>

@@ -59,116 +59,118 @@ const UploadStory = () => {
   };
 
   return (
-    <div className="flex justify-center p-10">
-      <div className="flex flex-row items-center space-x-8">
-        {/* Image Section */}
+    <div className="p-6 max-w-7xl mx-auto flex flex-col lg:flex-row">
+      {/* Left side: Image */}
+      <div className="lg:w-1/2 mb-4 lg:mb-0 flex justify-center">
+        <img
+          src={
+            coverImage ||
+            "https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
+          }
+          alt="Cover"
+          className="max-w-full max-h-96 object-cover rounded-md"
+        />
+      </div>
 
-        {/* Form Section */}
-        <div className="w-1/2 p-6 max-w-md border rounded-md shadow-lg">
-          <h2 className="text-xl font-semibold mb-4">Upload Story</h2>
+      {/* Right side: Form */}
+      <div className="lg:w-1/2 flex flex-col justify-start ml-0 lg:ml-4">
+        <h2 className="text-xl font-semibold mb-4">Upload Story</h2>
 
-          {error && <p className="text-red-500 mb-2">{error}</p>}
-          <div className="w-1/2">
-            <img
-              src="https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
-              alt="upload"
-              className="rounded-md shadow-md"
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="title"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={title}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
             />
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor="title"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={title}
-                onChange={handleChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                required
-              />
-            </div>
 
-            <div className="mb-4">
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor="description"
-              >
-                Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={description}
-                onChange={handleChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                required
-              ></textarea>
-            </div>
-
-            <div className="mb-4">
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor="content"
-              >
-                Content
-              </label>
-              <textarea
-                id="content"
-                name="content"
-                value={content}
-                onChange={handleChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                required
-              ></textarea>
-            </div>
-
-            <div className="mb-4">
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor="coverImage"
-              >
-                Cover Image (URL or Base64)
-              </label>
-              <input
-                type="text"
-                id="coverImage"
-                name="coverImage"
-                value={coverImage}
-                onChange={handleChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded-md"
-              disabled={isLoading}
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="description"
             >
-              {isLoading ? (
-                <AiOutlineLoading className="animate-spin mx-auto text-lg" />
-              ) : (
-                "Upload Story"
-              )}
-            </button>
-          </form>
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={description}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            ></textarea>
+          </div>
 
-          {story && (
-            <div className="mt-4 p-4 border border-green-200 rounded-md bg-green-100">
-              <h3 className="font-semibold text-lg">
-                Story Uploaded Successfully!
-              </h3>
-              <p>{story.title}</p>
-              <p>{story.description}</p>
-            </div>
-          )}
-        </div>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="content"
+            >
+              Content
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              value={content}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            ></textarea>
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="coverImage"
+            >
+              Cover Image (URL or Base64)
+            </label>
+            <input
+              type="text"
+              id="coverImage"
+              name="coverImage"
+              value={coverImage}
+              onChange={handleChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded-md"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <AiOutlineLoading className="animate-spin mx-auto text-lg" />
+            ) : (
+              "Upload Story"
+            )}
+          </button>
+        </form>
+
+        {story && (
+          <div className="mt-4 p-4 border border-green-200 rounded-md bg-green-100">
+            <h3 className="font-semibold text-lg">
+              Story Uploaded Successfully!
+            </h3>
+            <p>{story.title}</p>
+            <p>{story.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );

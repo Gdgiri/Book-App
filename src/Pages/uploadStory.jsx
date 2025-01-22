@@ -63,10 +63,7 @@ const UploadStory = () => {
       {/* Left side: Image */}
       <div className="lg:w-1/2 mb-4 lg:mb-0 flex justify-center">
         <img
-          src={
-            coverImage ||
-            "https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
-          }
+          src={coverImage || "https://via.placeholder.com/500"}
           alt="Cover"
           className="max-w-full max-h-96 object-cover rounded-md"
         />

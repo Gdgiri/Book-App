@@ -1,138 +1,183 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import {
-  loginRequest,
-  loginSuccess,
-  loginFailure,
-} from "../Redux/Slices/authSlice";
-import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineLoading } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { uploadStory } from "../Redux/Slices/storeSlice"; // Correct import path for your storySlice
 
-const LoginPage = () => {
+const UploadStory = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    content: "",
+    coverImage: "",
+  });
+
+  const { title, description, content, coverImage } = formData;
+
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { isLoading, error, story } = useSelector((state) => state.story);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  useEffect(() => {
+    // Check if the user is authenticated
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Redirect to login if no token is found
+      navigate("/login");
+    }
+  }, [navigate]);
 
-  const handleLogin = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginRequest());
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Authentication token not found.");
+      return;
+    }
+
+    const storyData = {
+      title,
+      description,
+      content,
+      coverImage,
+    };
 
     try {
-      const { data } = await axios.post(
-        "https://book-app-backend-6b6f.onrender.com/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      if (data.token) {
-        dispatch(loginSuccess(data));
-        navigate("/getall");
-      } else {
-        dispatch(loginFailure("No token received"));
-      }
-    } catch (err) {
-      dispatch(
-        loginFailure(err.response?.data?.message || "Something went wrong")
-      );
+      dispatch(uploadStory(storyData)); // Dispatch the action to upload the story
+    } catch (error) {
+      console.error("Error uploading story:", error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100">
-      <div className="flex w-11/12 max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-        {/* Left Section: Form */}
-        <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-3xl font-bold text-gray-700 text-center mb-6">
-            Login
-          </h2>
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-600"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="relative">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-600"
-              >
-                Password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 top-5 flex items-center text-gray-600 focus:outline-none"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-
-            <div>
-              <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 flex justify-center items-center"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <FaSpinner className="animate-spin mr-2" /> Loading...
-                  </>
-                ) : (
-                  "Login"
-                )}
-              </button>
-            </div>
-            <div className="text-center mt-4">
-              <span>Forgot Password? </span>
-              <Link to="/forgot" className="text-blue-500 hover:underline">
-                Click Here
-              </Link>
-            </div>
-          </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 to-blue-200">
+      <div className="flex w-11/12 max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105">
+        {/* Left Section: Image */}
+        <div className="w-full md:w-1/2 p-6 flex justify-center">
+          <img
+            src={
+              coverImage ||
+              "https://i.pinimg.com/736x/a6/84/05/a68405f3e6d87b2b90fec8a09be215e7.jpg"
+            }
+            alt="Cover"
+            className="max-w-full max-h-96 object-cover rounded-md shadow-lg"
+          />
         </div>
 
-        {/* Right Section: Image */}
-        <div className="hidden md:block w-1/2 bg-gradient-to-tr from-blue-500 to-purple-50 relative">
-          <img
-            src="https://i.pinimg.com/236x/0c/9b/89/0c9b89b62ba04b4b4740f4ce2da28b54.jpg"
-            alt="login"
-            className="w-full h-full object-cover"
-          />
+        {/* Right Section: Form */}
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-start bg-gradient-to-br from-indigo-50 to-blue-50">
+          <h2 className="text-3xl font-bold text-gray-700 text-center mb-6">
+            Upload Story
+          </h2>
+
+          {error && <p className="text-red-500 mb-2">{error}</p>}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="title"
+              >
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={title}
+                onChange={handleChange}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="description"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={description}
+                onChange={handleChange}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="content"
+              >
+                Content
+              </label>
+              <textarea
+                id="content"
+                name="content"
+                value={content}
+                onChange={handleChange}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="coverImage"
+              >
+                Cover Image (URL or Base64)
+              </label>
+              <input
+                type="text"
+                id="coverImage"
+                name="coverImage"
+                value={coverImage}
+                onChange={handleChange}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white p-3 rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <AiOutlineLoading className="animate-spin mx-auto text-lg" />
+              ) : (
+                "Upload Story"
+              )}
+            </button>
+          </form>
+
+          {story && (
+            <div className="mt-4 p-4 border border-green-200 rounded-md bg-green-100 shadow-lg">
+              <h3 className="font-semibold text-lg">
+                Story Uploaded Successfully!
+              </h3>
+              <p>{story.title}</p>
+              <p>{story.description}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default UploadStory;

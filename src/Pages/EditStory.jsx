@@ -133,7 +133,7 @@ const EditStory = () => {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto border rounded-md shadow-lg flex items-center">
+    <div className="p-6 max-w-5xl mx-auto border rounded-md shadow-lg flex items-center m-10">
       <div className="flex-1 pr-6">
         <img
           src="https://i.pinimg.com/736x/96/07/59/960759a9a5290e870005e5da870a12b6.jpg"

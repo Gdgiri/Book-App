@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useParams to access the route params
-import {
-  AiOutlineLoading,
-  AiOutlineEdit,
-  AiOutlineDelete,
-} from "react-icons/ai"; // Import edit and delete icons
+import { AiOutlineLoading } from "react-icons/ai";
 import axios from "axios"; // Import axios for making API calls
 
 const EditStory = () => {
@@ -259,9 +255,8 @@ const EditStory = () => {
             {isLoading ? (
               <AiOutlineLoading className="animate-spin mx-auto text-lg" />
             ) : (
-              <AiOutlineEdit className="mr-2" /> // Edit Icon
+              "Update Story"
             )}
-            Update Story
           </button>
         </form>
 
@@ -274,9 +269,8 @@ const EditStory = () => {
             {isLoading ? (
               <AiOutlineLoading className="animate-spin mx-auto text-lg" />
             ) : (
-              <AiOutlineDelete className="mr-2" /> // Delete Icon
+              "Delete Story"
             )}
-            Delete Story
           </button>
         </div>
       </div>

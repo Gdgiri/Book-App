@@ -21,7 +21,7 @@ const Navbar = () => {
   const isLoggedIn = !!localStorage.getItem("token");
 
   const activeClass = "text-yellow-400 font-bold border-b-2 border-yellow-400";
-  const inactiveClass = "hover:border-b-2 border-yellow-400";
+  const inactiveClass = "hover:yellow-200";
 
   return (
     <nav className="bg-blue-600 text-white p-4">

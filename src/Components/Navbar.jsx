@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { AiOutlineUpload } from "react-icons/ai";
+import { ImBooks } from "react-icons/im";
+import { IoMdHome } from "react-icons/io";
+import { FaUserPlus, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate, NavLink } from "react-router-dom";
 
 const Navbar = () => {
@@ -69,7 +73,7 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 mx-auto">
+        <ul className="hidden md:flex space-x-8 mx-auto items-center">
           <li>
             <NavLink
               to="/getall"
@@ -77,7 +81,10 @@ const Navbar = () => {
                 isActive ? `${activeClass}` : `${inactiveClass}`
               }
             >
-              Home
+              <div className="flex items-center space-x-2">
+                <IoMdHome size={20} />
+                <span>Home</span>
+              </div>
             </NavLink>
           </li>
           <li>
@@ -87,7 +94,10 @@ const Navbar = () => {
                 isActive ? `${activeClass}` : `${inactiveClass}`
               }
             >
-              Stories
+              <div className="flex items-center space-x-2">
+                <ImBooks size={20} />
+                <span>Stories</span>
+              </div>
             </NavLink>
           </li>
           <li>
@@ -97,29 +107,34 @@ const Navbar = () => {
                 isActive ? `${activeClass}` : `${inactiveClass}`
               }
             >
-              Upload
+              <div className="flex items-center space-x-2">
+                <AiOutlineUpload size={20} />
+                <span>Upload</span>
+              </div>
             </NavLink>
           </li>
         </ul>
 
         {/* Desktop Buttons */}
-        <ul className="hidden md:flex space-x-4">
+        <ul className="hidden md:flex space-x-4 items-center">
           {isLoggedIn ? (
             <li>
               <button
-                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
+                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg flex items-center space-x-2"
                 onClick={handleLogout}
               >
-                Logout
+                <FaSignOutAlt />
+                <span>Logout</span>
               </button>
             </li>
           ) : (
             <li>
               <button
-                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg"
+                className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg flex items-center space-x-2"
                 onClick={handleRegister}
               >
-                Register
+                <FaUserPlus />
+                <span>Register</span>
               </button>
             </li>
           )}
@@ -137,7 +152,10 @@ const Navbar = () => {
                   isActive ? `${activeClass} block` : `${inactiveClass} block`
                 }
               >
-                Home
+                <div className="flex justify-center items-center space-x-2">
+                  <IoMdHome size={20} />
+                  <span>Home</span>
+                </div>
               </NavLink>
             </li>
             <li>
@@ -147,7 +165,10 @@ const Navbar = () => {
                   isActive ? `${activeClass} block` : `${inactiveClass} block`
                 }
               >
-                Stories
+                <div className="flex justify-center items-center space-x-2">
+                  <ImBooks size={20} />
+                  <span>Stories</span>
+                </div>
               </NavLink>
             </li>
             <li>
@@ -157,7 +178,10 @@ const Navbar = () => {
                   isActive ? `${activeClass} block` : `${inactiveClass} block`
                 }
               >
-                Upload
+                <div className="flex justify-center items-center space-x-2">
+                  <AiOutlineUpload size={20} />
+                  <span>Upload</span>
+                </div>
               </NavLink>
             </li>
           </ul>
@@ -165,19 +189,21 @@ const Navbar = () => {
             {isLoggedIn ? (
               <li>
                 <button
-                  className="w-full bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg"
+                  className="w-full bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg flex justify-center items-center space-x-2"
                   onClick={handleLogout}
                 >
-                  Logout
+                  <FaSignOutAlt />
+                  <span>Logout</span>
                 </button>
               </li>
             ) : (
               <li>
                 <button
-                  className="w-full bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg"
+                  className="w-full bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg flex justify-center items-center space-x-2"
                   onClick={handleRegister}
                 >
-                  Register
+                  <FaUserPlus />
+                  <span>Register</span>
                 </button>
               </li>
             )}

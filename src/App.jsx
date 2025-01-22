@@ -12,6 +12,11 @@ import EditStory from "./Pages/EditStory";
 import Navbar from "./Components/Navbar";
 import StoryDetail from "./Pages/StoryDetail";
 import RatingService from "./Pages/RatingService";
+import Footer from "./Components/Footer";
+import About from "./Pages/About";
+import Privacy from "./Pages/Privacy";
+import Contact from "./Pages/Contact";
+import License from "./Pages/License";
 
 const App = () => {
   return (
@@ -35,10 +40,17 @@ const App = () => {
         <Route path="/update/:id" element={<EditStory />} />
         <Route path="/story" element={<StoryDetail />} />
 
+        {/* footer */}
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/licensing" element={<License />} />
+
         {/* Rating and review */}
 
         <Route path="/rating" element={<RatingService />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

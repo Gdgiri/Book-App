@@ -49,19 +49,11 @@ const UserStories = () => {
       <h2 className="text-2xl font-bold my-4 text-center">
         Your Uploaded Stories
       </h2>
-      <div className="text-center mb-4 me-auto">
-        <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white flex items-center justify-center">
-          <AiOutlineUpload className="mr-2" />
-          <Link to="/upload" className="text-white">
-            Upload
-          </Link>
-        </button>
-      </div>
 
       {stories.length === 0 ? (
         <>
           <p>No stories uploaded yet.</p>
-          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white justify-center flex items-center">
+          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white justify-center flex items-center ">
             <AiOutlineUpload className="mr-2" />
             <Link to="/upload" className="text-white">
               Upload

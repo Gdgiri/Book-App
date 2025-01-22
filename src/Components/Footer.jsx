@@ -21,7 +21,7 @@ const Footer = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 font-bold border-b-2 border-yellow-400"
-                    : "text-white hover:text-red-500 transition-colors"
+                    : "text-white hover:border-b-2 border-yellow-400"
                 }
               >
                 About
@@ -33,7 +33,7 @@ const Footer = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 font-bold border-b-2 border-yellow-400"
-                    : "text-white hover:text-red-500 transition-colors"
+                    : "text-white hover:border-b-2 border-yellow-400"
                 }
               >
                 Privacy Policy
@@ -45,7 +45,7 @@ const Footer = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 font-bold border-b-2 border-yellow-400"
-                    : "text-white hover:text-red-500 transition-colors"
+                    : "text-white hover:border-b-2 border-yellow-400"
                 }
               >
                 Licensing
@@ -57,7 +57,7 @@ const Footer = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 font-bold border-b-2 border-yellow-400"
-                    : "text-white hover:text-red-500 transition-colors"
+                    : "text-white hover:border-b-2 border-yellow-400"
                 }
               >
                 Contact

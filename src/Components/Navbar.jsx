@@ -81,7 +81,7 @@ const Navbar = () => {
                 isActive ? `${activeClass}` : `${inactiveClass}`
               }
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 hover:border-b-2 border-yellow-400">
                 <IoMdHome size={20} />
                 <span>Home</span>
               </div>

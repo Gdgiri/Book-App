@@ -59,7 +59,7 @@ const UploadStory = () => {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto border rounded-md shadow-lg">
+    <div className="p-6 max-w-md mx-auto border rounded-md shadow-lg bg-gradient-to-t from-gray-300 to-gray-100 transform hover:scale-105 transition-all">
       <h2 className="text-xl font-semibold mb-4">Upload Story</h2>
 
       {error && <p className="text-red-500 mb-2">{error}</p>}

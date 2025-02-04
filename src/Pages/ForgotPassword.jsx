@@ -39,7 +39,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 px-4 sm:px-6 lg:px-8">
       <div className="flex w-11/12 max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
         {/* Left Section: Image */}
         <div className="hidden md:block w-1/2 bg-gradient-to-tr from-blue-500 to-purple-50 relative">
